@@ -1,7 +1,12 @@
+
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import App from "./App";
+
+beforeEach(() => {
+  window.history.replaceState({}, "", "/");
+});
 
 describe("Program 20 - Nested Blog Routes", () => {
   test("displays the Home page", () => {
@@ -20,14 +25,18 @@ describe("Program 20 - Nested Blog Routes", () => {
     const user = userEvent.setup();
     render(<App />);
 
-    await user.click(screen.getByRole("link", { name: /visit blog/i }));
+    await user.click(
+      screen.getByRole("link", { name: /visit blog/i })
+    );
 
     expect(
       screen.getByRole("heading", { name: /blog posts/i })
     ).toBeInTheDocument();
 
     expect(
-      screen.getByRole("link", { name: /post 1: web development/i })
+      screen.getByRole("link", {
+        name: /post 1: web development/i
+      })
     ).toBeInTheDocument();
   });
 
@@ -35,9 +44,14 @@ describe("Program 20 - Nested Blog Routes", () => {
     const user = userEvent.setup();
     render(<App />);
 
-    await user.click(screen.getByRole("link", { name: /visit blog/i }));
     await user.click(
-      screen.getByRole("link", { name: /post 1: web development/i })
+      screen.getByRole("link", { name: /visit blog/i })
+    );
+
+    await user.click(
+      screen.getByRole("link", {
+        name: /post 1: web development/i
+      })
     );
 
     expect(
@@ -49,9 +63,14 @@ describe("Program 20 - Nested Blog Routes", () => {
     const user = userEvent.setup();
     render(<App />);
 
-    await user.click(screen.getByRole("link", { name: /visit blog/i }));
     await user.click(
-      screen.getByRole("link", { name: /post 2: learning react/i })
+      screen.getByRole("link", { name: /visit blog/i })
+    );
+
+    await user.click(
+      screen.getByRole("link", {
+        name: /post 2: learning react/i
+      })
     );
 
     expect(
@@ -63,9 +82,14 @@ describe("Program 20 - Nested Blog Routes", () => {
     const user = userEvent.setup();
     render(<App />);
 
-    await user.click(screen.getByRole("link", { name: /visit blog/i }));
     await user.click(
-      screen.getByRole("link", { name: /post 3: career skills/i })
+      screen.getByRole("link", { name: /visit blog/i })
+    );
+
+    await user.click(
+      screen.getByRole("link", {
+        name: /post 3: career skills/i
+      })
     );
 
     expect(
@@ -77,9 +101,14 @@ describe("Program 20 - Nested Blog Routes", () => {
     const user = userEvent.setup();
     render(<App />);
 
-    await user.click(screen.getByRole("link", { name: /visit blog/i }));
     await user.click(
-      screen.getByRole("link", { name: /post 2: learning react/i })
+      screen.getByRole("link", { name: /visit blog/i })
+    );
+
+    await user.click(
+      screen.getByRole("link", {
+        name: /post 2: learning react/i
+      })
     );
 
     expect(
@@ -88,6 +117,14 @@ describe("Program 20 - Nested Blog Routes", () => {
 
     expect(
       screen.getByRole("link", { name: /^home$/i })
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByRole("link", { name: /^blog$/i })
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByText(/react router practical/i)
     ).toBeInTheDocument();
   });
 });
